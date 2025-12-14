@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crm',
-    'django-filters',
+    'django_filters',
     'graphene_django',
 ]
 
@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'alx_backend_graphql_crm.urls'
+ROOT_URLCONF = 'alx_backend_graphql.urls'
 
 TEMPLATES = [
     {
