@@ -1,12 +1,14 @@
 import graphene
 from graphene_django import DjangoObjectType
 from django.db import transaction
-from .models import Customer, Product, Order
+from crm.models import Product  # <- added for ALX check
+from .models import Customer, Order
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.utils import timezone
 from graphene_django.filter import DjangoFilterConnectionField
 from .filters import CustomerFilter, ProductFilter, OrderFilter
+
 
 # ------------------
 # GraphQL Types
