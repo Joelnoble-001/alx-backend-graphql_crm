@@ -122,8 +122,34 @@ class CreateOrder(graphene.Mutation):
         order_date = order_date or timezone.now()
         order = Order.objects.create(customer=customer, order_date=order_date)
         order.products.set(products)
-        order.save()  # total_amount recalculated in model save
+        order.save()
         return CreateOrder(order=order)
+
+
+# ------------------
+# Update Low Stock Mutation
+# ------------------
+class UpdateLowStockProducts(graphene.Mutation):
+    class Arguments:
+        pass  # no arguments needed
+
+    updated_products = graphene.List(ProductType)
+    message = graphene.String()
+
+    def mutate(self, info):
+        low_stock_products = Product.objects.filter(stock__lt=10)
+        updated_list = []
+
+        for product in low_stock_products:
+            product.stock += 10  # simulate restocking
+            product.save()
+            updated_list.append(product)
+
+        return UpdateLowStockProducts(
+            updated_products=updated_list,
+            message=f"{len(updated_list)} products updated successfully."
+        )
+
 
 # ------------------
 # Mutation Class
@@ -134,14 +160,12 @@ class Mutation(graphene.ObjectType):
     create_product = CreateProduct.Field()
     create_order = CreateOrder.Field()
 
+    update_low_stock_products = UpdateLowStockProducts.Field()
+
+
 # ------------------
 # Query Class
 # ------------------
-class Query(graphene.ObjectType):
-    hello = graphene.String(default_value="Hello, GraphQL!")
-
-
-
 class Query(graphene.ObjectType):
     hello = graphene.String(default_value="Hello, GraphQL!")
 

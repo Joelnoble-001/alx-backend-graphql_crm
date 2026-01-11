@@ -13,7 +13,8 @@ INSTALLED_APPS = [
 
 # Cron job configuration
 CRONJOBS = [
-    ('*/5 * * * *', 'crm.cron.log_crm_heartbeat'),
+    ('*/5 * * * *', 'crm.cron.log_crm_heartbeat'), # heartbeat every 5 minutes
+    ('0 */12 * * *', 'crm.cron.update_low_stock'), # low stock updater every 12 hours
 ]
 
 # Other minimal Django settings needed to avoid errors
